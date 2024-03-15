@@ -36,15 +36,17 @@ urlpatterns = [
 
     # Order URLs
     path('create_order/', create_order),
-    path('orders', view_order),
+    path('order', view_order),
+    path('orders', view_orders),
     path('orders/', edit_order),
     path('orders/delete/', delete_order),
 
     # OrderDetail URLs
     path('orderdetails/', create_order_detail),
     path('orderdetails', view_order_detail),
-    path('orderdetails/', edit_order_detail),
+    path('edit_orderdetails/', edit_order_detail),
     path('orderdetails/delete/', delete_order_detail),
 
 
+  
 ]

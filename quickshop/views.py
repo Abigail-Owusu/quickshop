@@ -130,6 +130,9 @@ def delete_user(request):
 
     user.delete()
     return Response(status=status.HTTP_204_NO_CONTENT)
+
+
+    
 # Product views
 @api_view(['POST'])
 @permission_classes([IsAuthenticated,IsAdministrator])
