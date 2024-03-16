@@ -56,6 +56,7 @@ def user_signup(request):
 
 
 
+
 @api_view(['POST'])
 def user_login(request):
     """
@@ -99,6 +100,13 @@ def user_login(request):
         if user.email_verified == 0:
             return Response({'error': 'Please verify your email address to login'}, status=status.HTTP_401_UNAUTHORIZED)
         return Response({'error': 'Invalid credentials'}, status=status.HTTP_401_UNAUTHORIZED)
+
+@api_view(['GET'])
+@permission_classes([IsAuthenticated, IsAdministrator])
+def view_users(request):
+    users = CustomUser.objects.all()
+    serializer = CustomUserSerializer(users, many=True)
+    return Response(serializer.data)
 
 
 @api_view(['PATCH'])
@@ -250,7 +258,7 @@ def view_orders(request):
 
 
 @api_view(['POST'])
-@permission_classes([IsAuthenticated,IsAdministrator|IsSalesPersonnel|IsCustomer])
+@permission_classes([IsAuthenticated,IsAdministrator|IsSalesPersonnel])
 def create_order(request):
     """
     Create a new order

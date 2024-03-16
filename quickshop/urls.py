@@ -22,9 +22,10 @@ urlpatterns = [
     path("admin/", admin.site.urls),
      # User authentication URLs
     path('signup/', user_signup),
+    path('view_users', view_users),
     path('login/', user_login),
     path('api/verify', verify_email),
-    path('api/delete_user', delete_user),
+    path('users/delete', delete_user),
     path('api/update_user', edit_user),
     
     # Product URLs
