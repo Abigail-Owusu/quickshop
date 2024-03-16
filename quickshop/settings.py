@@ -26,6 +26,7 @@ SECRET_KEY = "django-insecure-2!hkcw)n*gy$c8tb3e(+pdy405=qq^ymi=#$$=rd976&)9o*83
 DEBUG = True
 
 ALLOWED_HOSTS = []
+CORS_ORIGIN_ALLOW_ALL = True
 
 
 # Application definition
@@ -40,6 +41,7 @@ INSTALLED_APPS = [
     "rest_framework",
     "rest_framework.authtoken",
     "quickshop",
+     "corsheaders",
 ]
 
 MIDDLEWARE = [
@@ -50,6 +52,8 @@ MIDDLEWARE = [
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
+    'corsheaders.middleware.CorsMiddleware', 
+    'django.middleware.security.SecurityMiddleware',
 ]
 
 ROOT_URLCONF = "quickshop.urls"
