@@ -11,6 +11,7 @@ from Helper_func.helpers import send_verification_email
 from django.utils.encoding import force_str
 from django.utils.http import urlsafe_base64_decode
 from django.shortcuts import render
+from django.contrib.auth.hashers import identify_hasher, make_password
 
 
 # User views
@@ -40,7 +41,7 @@ def user_signup(request):
     Register a new user
     """
     if request.method == 'POST':
-        serializer = CustomUserSerializer(data=request.data)
+        serializer = CustomerSerializer(data=request.data)
         if serializer.is_valid():
             user = serializer.save(email_verified=False)  # Set email_verified to False initially
 
@@ -62,11 +63,20 @@ def user_login(request):
     """
     if request.method == 'POST':
         email = request.data.get('email')
+        user = CustomUser.objects.filter(email=email).first()
+    
         print(email)
+        # Check if the password is already hashed
+        if identify_hasher(user.password) is None:
+            # Password is not hashed, hash it
+            hashed_password = make_password('new_password')
+            user.password = hashed_password
+            user.save()
+        
         password = request.data.get('password')
 
         # user = authenticate(request, email=email, password=password)
-        user = CustomUser.objects.filter(email=email).first()
+        # user = CustomUser.objects.filter(email=email).first()
     
         if user is None:
             return Response({'error': 'User does not exist!!'}, status=status.HTTP_404_NOT_FOUND)

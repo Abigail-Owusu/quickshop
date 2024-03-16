@@ -24,7 +24,20 @@ class CustomUserSerializer(serializers.ModelSerializer):
         user.set_password(validated_data['password'])
         user.save()
         return user
+
+class CustomerSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = CustomUser
+        fields = ['user_id', 'email', 'name', 'password', ]
+        extra_kwargs = {'password': {'write_only': True}}
     
+    def create(self, validated_data):
+        validated_data['role'] = "Customer"
+        user = super().create(validated_data)
+        user.set_password(validated_data['password'])
+        user.save()
+        return user
+   
 class UpdateCustomerUserSerializer(serializers.ModelSerializer):
     class Meta:
         model = CustomUser
