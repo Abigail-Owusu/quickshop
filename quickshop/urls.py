@@ -22,7 +22,7 @@ urlpatterns = [
     path("admin/", admin.site.urls),
      # User authentication URLs
     path('signup/', user_signup),
-    path('view_users', view_users),
+    path('users', view_users),
     path('login/', user_login),
     path('api/verify', verify_email),
     path('users/delete', delete_user),
@@ -44,7 +44,8 @@ urlpatterns = [
 
     # OrderDetail URLs
     path('orderdetails/', create_order_detail),
-    path('orderdetails', view_order_detail),
+    path('orderdetail', view_order_detail),
+    path('orderdetails', view_order_details),
     path('edit_orderdetails/', edit_order_detail),
     path('orderdetails/delete/', delete_order_detail),
 

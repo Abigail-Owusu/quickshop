@@ -326,7 +326,16 @@ def view_order_detail(request):
         return Response(serializer.data)
     except OrderDetail.DoesNotExist:
         return Response({"message": "Order detail not found"}, status=status.HTTP_404_NOT_FOUND)
-    
+
+@api_view(['GET'])
+@permission_classes([IsAuthenticated,IsSalesPersonnel | IsAdministrator | IsInventoryManager])
+def view_order_details(request):
+    """
+    View all order details
+    """
+    order_details = OrderDetail.objects.all()
+    serializer = OrderDetailSerializer(order_details, many=True)
+    return Response(serializer.data)    
 
 @api_view(['POST'])
 @permission_classes([IsAuthenticated,IsAdministrator|IsSalesPersonnel])
